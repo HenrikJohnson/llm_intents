@@ -5,6 +5,7 @@ from collections.abc import Callable
 from datetime import date, datetime, timedelta
 from http import HTTPStatus
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import voluptuous as vol
 from homeassistant.components.weather import WeatherEntityFeature
@@ -625,8 +626,6 @@ class WeatherForecastTool(BaseTool):
         name = day_date.strftime("%A")
         if timezone_str:
             try:
-                from zoneinfo import ZoneInfo
-
                 now_date = datetime.now(ZoneInfo(timezone_str)).date()
             except Exception:
                 now_date = datetime.now().astimezone().date()
@@ -768,13 +767,15 @@ class WeatherForecastTool(BaseTool):
         place_tz_str = place.get("timezone")
         if place_tz_str and target_date is not None:
             try:
-                from zoneinfo import ZoneInfo
-
                 place_tz = ZoneInfo(place_tz_str)
                 now_in_place = datetime.now(place_tz)
                 target_date = self._find_target_date(date_range, now_in_place)
             except Exception:
-                pass
+                _LOGGER.debug(
+                    "Failed to recompute target date in timezone '%s'",
+                    place_tz_str,
+                    exc_info=True,
+                )
 
         params = {
             "latitude": latitude,
