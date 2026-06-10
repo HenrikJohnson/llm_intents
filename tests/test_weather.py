@@ -130,7 +130,7 @@ def test_find_target_date_invalid() -> None:
 
 def test_find_target_date_explicit_now_different_timezone() -> None:
     """Test that _find_target_date respects the provided 'now' datetime."""
-    now_utc = dt.datetime(2026, 1, 1, 23, 0, 0, tzinfo=dt.timezone.utc)
+    now_utc = dt.datetime(2026, 1, 1, 23, 0, 0, tzinfo=dt.UTC)
     assert WeatherForecastTool._find_target_date("today", now_utc) == date(
         2026, 1, 1
     )
@@ -1145,7 +1145,7 @@ async def test_async_call_location_different_timezone(
     """Test location forecast when target timezone is ahead of local time."""
     # Freeze to 23:00 UTC on Jan 1; in Stockholm (UTC+1) it is already Jan 2.
     with freeze_time(
-        dt.datetime(2026, 1, 1, 23, 0, 0, tzinfo=dt.timezone.utc)
+        dt.datetime(2026, 1, 1, 23, 0, 0, tzinfo=dt.UTC)
     ):
         tool_input = llm.ToolInput(
             tool_args={"range": "today", "location": "Stockholm", "hourly": False},
