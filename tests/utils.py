@@ -39,6 +39,17 @@ def mock_session(status: int, data: dict) -> AsyncMock:
     return session
 
 
+def mock_post_session(status: int, data: dict) -> AsyncMock:
+    """Create a mock HTTP session for POST requests."""
+    session = AsyncMock()
+
+    def mock_post(*args: object, **kwargs: Any) -> MockContext:
+        return MockContext(mock_response(status, data))
+
+    session.post = Mock(side_effect=mock_post)
+    return session
+
+
 def mock_response(status: int, data: dict) -> AsyncMock:
     """Create a mock HTTP response."""
     response = AsyncMock()

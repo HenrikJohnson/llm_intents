@@ -44,7 +44,12 @@ async def test_temperature_conversions(
         tool_name="unit_convert", tool_args=json.loads(tool_input_json)
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await unit_converter_tool.async_call(mock_hass, tool_input, llm_context)
@@ -77,7 +82,12 @@ async def test_volume_conversions(
         tool_name="unit_convert", tool_args=json.loads(tool_input_json)
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await unit_converter_tool.async_call(mock_hass, tool_input, llm_context)
@@ -96,7 +106,12 @@ async def test_temperature_to_volume_error(
         tool_args={"amount": "25", "from_unit": "celsius", "to_unit": "cup"},
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await unit_converter_tool.async_call(mock_hass, tool_input, llm_context)
@@ -115,7 +130,12 @@ async def test_volume_to_temperature_error(
         tool_args={"amount": "1", "from_unit": "cup", "to_unit": "fahrenheit"},
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await unit_converter_tool.async_call(mock_hass, tool_input, llm_context)
@@ -134,7 +154,12 @@ async def test_unknown_temperature_unit(
         tool_args={"amount": "25", "from_unit": "kelvin", "to_unit": "celsius"},
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await unit_converter_tool.async_call(mock_hass, tool_input, llm_context)
