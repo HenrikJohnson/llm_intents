@@ -34,9 +34,15 @@ class SearXngSearchTool(SearchWebTool):
             "Accept": "application/json",
         }
 
+        params = {
+            "format": "json",
+            "q": query,
+        }
+
         async with session.get(
-            f"{url}?format=json&q={query}",
+            url,
             headers=headers,
+            params=params,
         ) as resp:
             data = await resp.json()
             if resp.status == HTTPStatus.OK:

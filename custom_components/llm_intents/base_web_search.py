@@ -76,6 +76,6 @@ class SearchWebTool(BaseTool):
                 return self.with_instructions(response)
 
             return response
-        except Exception as e:
+        except Exception:
             _LOGGER.exception(msg="Web search error")
-            return {"error": f"Error searching web: {e!s}"}
+            return {"error": "Error searching web"}

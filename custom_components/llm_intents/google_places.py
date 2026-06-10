@@ -212,6 +212,6 @@ class FindPlacesTool(BaseTool):
                 _LOGGER.error(error_msg)
                 return {"error": f"Places search error: {resp.status}"}
 
-        except Exception as e:
+        except Exception:
             _LOGGER.exception("Places search encountered an error")
-            return {"error": f"Error finding places: {e!s}"}
+            return {"error": "Error finding places"}

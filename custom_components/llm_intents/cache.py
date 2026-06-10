@@ -53,7 +53,7 @@ class SQLiteCache:
             else json.dumps(params, sort_keys=True, separators=(",", ":"))
         )
         combined = tool + params_str
-        return hashlib.md5(combined.encode()).hexdigest()  # noqa: S324
+        return hashlib.sha256(combined.encode()).hexdigest()
 
     def _cleanup(self) -> None:
         """Remove old cached values that have expired."""
