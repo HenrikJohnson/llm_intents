@@ -919,6 +919,6 @@ class WeatherForecastTool(BaseTool):
                 forecast = "No weather forecast available for the selected range"
 
             return forecast
-        except Exception as e:
+        except Exception:
             _LOGGER.exception(msg="Weather forecast encountered an error")
-            return {"error": f"Error retrieving weather forecast: {e!s}"}
+            return {"error": "Error retrieving weather forecast"}

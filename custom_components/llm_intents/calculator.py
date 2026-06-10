@@ -7,7 +7,12 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import llm
 from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig
 from homeassistant.util.json import JsonObjectType
-from sympy import sympify
+from sympy.parsing.sympy_parser import (
+    convert_xor,
+    implicit_multiplication_application,
+    parse_expr,
+    standard_transformations,
+)
 
 from .base_tool import BaseTool
 
@@ -53,17 +58,31 @@ class CalculatorTool(BaseTool):
 
         try:
             result = _calculate(operation, data)
-        except Exception as e:
+        except Exception:
             _LOGGER.exception(msg="Calculator encountered an error")
-            return {"error": str(e)}
+            return {"error": "Calculator encountered an error processing the request"}
 
         return {"value": result}
+
+
+_SAFE_TRANSFORMATIONS = (
+    *standard_transformations,
+    convert_xor,
+    implicit_multiplication_application,
+)
 
 
 def _calculate(operation: str, data: list[str]) -> float:
     """Perform the requested operation on the supplied data."""
     if operation == "expression":
-        result = float(sympify(data[0], evaluate=True))
+        result = float(
+            parse_expr(
+                data[0],
+                local_dict={},
+                transformations=_SAFE_TRANSFORMATIONS,
+                evaluate=True,
+            ),
+        )
 
         if result.is_integer():
             result = int(result)
