@@ -48,7 +48,12 @@ async def test_calculator_operations(
         tool_name="calculate", tool_args=json.loads(tool_input_json)
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await calculator_tool.async_call(mock_hass, tool_input, llm_context)
@@ -65,7 +70,12 @@ async def test_calculator_invalid_operation(
         tool_name="calculate", tool_args={"operation": "divide", "data": ["10", "2"]}
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await calculator_tool.async_call(mock_hass, tool_input, llm_context)
@@ -82,7 +92,12 @@ async def test_calculator_empty_data(
         tool_name="calculate", tool_args={"operation": "min", "data": []}
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await calculator_tool.async_call(mock_hass, tool_input, llm_context)
@@ -99,7 +114,12 @@ async def test_calculator_invalid_expression(
         tool_args={"operation": "expression", "data": ["invalid"]},
     )
     llm_context = llm.LLMContext(
-        platform="test", context=None, language="en", assistant=None, device_id=None
+        platform="test",
+        context=None,
+        user_prompt=None,
+        language="en",
+        assistant=None,
+        device_id=None,
     )
 
     result = await calculator_tool.async_call(mock_hass, tool_input, llm_context)
